@@ -1,0 +1,254 @@
+/* 顏色與全域設定 */
+:root {
+    --bg-color: #F7F5F0; 
+    --text-main: #3E3A39; 
+    --text-light: #706C69;
+    --accent-color: #A38F7A; 
+    --hot-color: #D27263; 
+    --cold-color: #6398D2; 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Serif TC', serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+/* 固定的導覽列 + 毛玻璃效果 */
+header {
+    text-align: center;
+    padding: 30px 20px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 245, 240, 0.85); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(163, 143, 122, 0.15);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    letter-spacing: 0.15em;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.3s;
+}
+
+nav a:hover {
+    border-bottom: 1px solid var(--text-main);
+}
+
+/* 優惠橫幅 */
+.promo-banner {
+    text-align: center;
+    margin: 30px auto;
+    padding: 15px;
+    max-width: 600px;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* 主要內容區 */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 50px 0 30px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0;
+}
+
+/* 菜單排版 */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 60px;
+}
+
+.menu-category h3 {
+    font-size: 1.2rem;
+    border-bottom: 1px dashed #D0CBC3;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+}
+
+/* 菜單項目的互動回饋 */
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) {
+    .menu-item:hover {
+        background-color: #F0EBE1;
+        transform: translateX(6px);
+    }
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-name {
+    font-size: 1.05rem;
+}
+
+.item-note {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.item-price {
+    font-size: 1.05rem;
+}
+
+/* 冷熱與推薦標示 */
+.temp-indicator {
+    display: inline-flex;
+    gap: 2px;
+}
+.dot {
+    width: 8px;
+    height: 12px;
+    border-radius: 4px;
+}
+.dot.hot { background-color: var(--hot-color); }
+.dot.cold { background-color: var(--cold-color); }
+
+.recommend::before {
+    content: '👍';
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+/* 頁尾資訊 */
+footer {
+    margin-top: 80px;
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid #EBE6DF;
+}
+
+.info-grid {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 30px;
+}
+
+.info-item h4 {
+    font-size: 1rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.temp-legend {
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* 滾動淡入動畫基礎樣式 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 回到頂部按鈕 */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--accent-color);
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    z-index: 99;
+}
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+#back-to-top:hover {
+    transform: translateY(-5px);
+}
+
+/* 手機版響應式設計 */
+@media (max-width: 768px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .info-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
