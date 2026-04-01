@@ -1,11 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 新增：進場轉場動畫邏輯 ---
+    const splashScreen = document.getElementById('splash-screen');
+    
+    // 確保網頁重新整理時，位置保持在最上方
+    window.scrollTo(0, 0);
+
+    // 設定 2 秒後淡出轉場畫面
+    setTimeout(() => {
+        splashScreen.classList.add('fade-out');
+    }, 2000);
+
+
+    // --- 原有：選單與分頁切換邏輯 ---
     const menuToggle = document.getElementById('menuToggle');
     const sideNav = document.getElementById('sideNav');
     const navOverlay = document.getElementById('navOverlay');
     const navLinks = document.querySelectorAll('.nav-link');
     const pageSections = document.querySelectorAll('.page-section');
 
-    // 開關側邊選單
     function toggleMenu() {
         menuToggle.classList.toggle('open');
         sideNav.classList.toggle('open');
@@ -15,30 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', toggleMenu);
     navOverlay.addEventListener('click', toggleMenu);
 
-    // 分頁切換邏輯
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('data-target');
 
-            // 如果點擊的是店家資訊，直接滾動到底部
             if (targetId === 'info-section') {
                 toggleMenu();
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 return;
             }
 
-            // 1. 移除所有導覽列的 active 狀態
             navLinks.forEach(l => l.classList.remove('active'));
-            // 2. 幫當前點擊的加上 active 狀態
             this.classList.add('active');
 
-            // 3. 隱藏所有內容區塊
             pageSections.forEach(section => section.classList.remove('active'));
-            // 4. 顯示目標區塊
             document.getElementById(targetId).classList.add('active');
 
-            // 5. 關閉選單並回到網頁最上方
             toggleMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
