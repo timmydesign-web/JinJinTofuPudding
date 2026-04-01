@@ -1,61 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. 導覽列平滑捲動 (扣除固定導覽列的高度，避免標題被遮擋)
-    document.querySelectorAll('nav a').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    const menuToggle = document.getElementById('menuToggle');
+    const sideNav = document.getElementById('sideNav');
+    const navOverlay = document.getElementById('navOverlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pageSections = document.querySelectorAll('.page-section');
+
+    // 開關側邊選單
+    function toggleMenu() {
+        menuToggle.classList.toggle('open');
+        sideNav.classList.toggle('open');
+        navOverlay.classList.toggle('open');
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', toggleMenu);
+
+    // 分頁切換邏輯
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            const headerHeight = document.querySelector('header').offsetHeight;
-            
-            if(targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - headerHeight - 20,
-                    behavior: 'smooth'
-                });
+            const targetId = this.getAttribute('data-target');
+
+            // 如果點擊的是店家資訊，直接滾動到底部
+            if (targetId === 'info-section') {
+                toggleMenu();
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                return;
             }
+
+            // 1. 移除所有導覽列的 active 狀態
+            navLinks.forEach(l => l.classList.remove('active'));
+            // 2. 幫當前點擊的加上 active 狀態
+            this.classList.add('active');
+
+            // 3. 隱藏所有內容區塊
+            pageSections.forEach(section => section.classList.remove('active'));
+            // 4. 顯示目標區塊
+            document.getElementById(targetId).classList.add('active');
+
+            // 5. 關閉選單並回到網頁最上方
+            toggleMenu();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
-
-    // 2. 滾動淡入動畫
-    const animateElements = document.querySelectorAll('.menu-category, .section-title, .promo-banner, .info-grid');
-    animateElements.forEach(el => el.classList.add('fade-in'));
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    animateElements.forEach(el => observer.observe(el));
-
-    // 3. 回到頂部按鈕邏輯
-    const backToTopBtn = document.createElement('a');
-    backToTopBtn.id = 'back-to-top';
-    backToTopBtn.href = '#top';
-    backToTopBtn.innerHTML = '↑'; 
-    document.body.appendChild(backToTopBtn);
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-
-    backToTopBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
 });
