@@ -5,366 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>津津豆花 | JIN JIN TOFU PUDDING</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* CSS 樣式設定 */
-        :root {
-            --bg-color: #F7F5F0; /* 統一的米白背景色 */
-            --text-main: #3E3A39; /* 柔和的深灰色文字 */
-            --text-light: #706C69;
-            --accent-color: #A38F7A; /* 點綴的茶褐色 */
-            --hot-color: #D27263; /* 溫和的紅色 (熱) */
-            --cold-color: #6398D2; /* 溫和的藍色 (冷) */
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Serif TC', serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.8;
-            letter-spacing: 0.05em;
-        }
-
-        /* 導覽列 */
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            letter-spacing: 0.15em;
-        }
-
-        nav {
-            margin-top: 20px;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 0.95rem;
-            border-bottom: 1px solid transparent;
-            transition: border-bottom 0.3s;
-        }
-
-        nav a:hover {
-            border-bottom: 1px solid var(--text-main);
-        }
-
-        /* 優惠橫幅 */
-        .promo-banner {
-            text-align: center;
-            margin: 30px auto;
-            padding: 15px;
-            max-width: 600px;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        /* 主要內容區 */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 50px 0 30px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent-color);
-            margin: 10px auto 0;
-        }
-
-        /* 菜單排版 (使用 CSS Grid 達成統一且整齊的視覺) */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px 60px;
-        }
-
-        .menu-category h3 {
-            font-size: 1.2rem;
-            border-bottom: 1px dashed #D0CBC3;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-        }
-
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 15px;
-        }
-
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .item-name {
-            font-size: 1.05rem;
-        }
-
-        .item-note {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .item-price {
-            font-size: 1.05rem;
-        }
-
-        /* 冷熱標示 */
-        .temp-indicator {
-            display: inline-flex;
-            gap: 2px;
-        }
-        .dot {
-            width: 8px;
-            height: 12px;
-            border-radius: 4px;
-        }
-        .dot.hot { background-color: var(--hot-color); }
-        .dot.cold { background-color: var(--cold-color); }
-
-        /* 推薦標示 */
-        .recommend::before {
-            content: '👍';
-            font-size: 0.9rem;
-            margin-right: 5px;
-        }
-
-        /* 頁尾資訊 */
-        footer {
-            margin-top: 80px;
-            padding: 60px 20px;
-            text-align: center;
-            border-top: 1px solid #EBE6DF;
-        }
-
-        .info-grid {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-bottom: 30px;
-        }
-
-        .info-item h4 {
-            font-size: 1rem;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .temp-legend {
-            margin-top: 40px;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        /* 手機版響應式設計 */
-        @media (max-width: 768px) {
-            .menu-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .info-grid {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header id="top">
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="side-nav" id="sideNav">
+        <div class="nav-header">津津豆花</div>
+        <a href="#" class="nav-link active" data-target="home-section">品牌故事</a>
+        <a href="#" class="nav-link" data-target="news-section">最新消息</a>
+        <a href="#" class="nav-link" data-target="menu-section">經典菜單</a>
+        <a href="#" class="nav-link" data-target="info-section">店家資訊</a>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <header>
         <h1>津津豆花</h1>
         <p>JIN JIN TOFU PUDDING</p>
-        <nav>
-            <a href="#menu-section">經典菜單</a>
-            <a href="#info-section">店家資訊</a>
-        </nav>
     </header>
 
     <main>
-        <div class="promo-banner">
-            每週三 買三送一（豆花類）
-        </div>
+        <section id="home-section" class="page-section active">
+            <div class="story-container">
+                <h2 class="section-title">我們的故事</h2>
+                <p class="story-text">
+                    津津豆花創立於 2001 年，隱身於充滿人情味的巷弄中。二十多年來，我們深信真正的美味來自於對細節的堅持與純粹的原料。
+                </p>
+                <img src="store-1.jpg" alt="津津豆花攤位外觀" class="story-image">
+                
+                <p class="story-text">
+                    為了將最新鮮、最純粹的豆香送到您手中，我們堅持每天早晨手工製作，早上十點準時拉開鐵門營業，只為保留豆花最完美的口感。
+                </p>
+                <p class="story-text">
+                    本店全面採用「非基因改造黃豆」，製作過程絕不添加任何防腐劑與人工香料。每一口綿密的豆花，都是歲月淬鍊下的職人手藝，也是我們對您健康與品質的無聲承諾。
+                </p>
+                <img src="store-2.jpg" alt="津津豆花店面" class="story-image">
+            </div>
+        </section>
 
-        <h2 id="menu-section" class="section-title">菜單 MENU</h2>
-
-        <div class="menu-grid">
-            <div class="menu-category">
-                <h3>豆花類</h3>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">清豆花</span>
-                    </div>
-                    <span class="item-price">$35</span>
+        <section id="news-section" class="page-section">
+            <h2 class="section-title">最新消息</h2>
+            <div class="news-list">
+                <div class="news-item">
+                    <span class="news-date">2026.04.01</span>
+                    <p class="news-content">【店休公告】本週五因內部設備維護，公休一日，請大家不要白跑一趟囉！</p>
                 </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name recommend">粉圓豆花</span>
-                        <span class="item-note">(檸檬)</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">紅豆豆花</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot cold"></span></span>
-                        <span class="item-name">綠豆豆花</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name recommend">芋泥豆花</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">花生豆花</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">大紅豆豆花</span>
-                    </div>
-                    <span class="item-price">$45</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">湯圓豆花</span>
-                    </div>
-                    <span class="item-price">$50</span>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                        <span class="item-name">芋圓豆花</span>
-                    </div>
-                    <span class="item-price">$50</span>
+                <div class="news-item">
+                    <span class="news-date">2026.03.15</span>
+                    <p class="news-content">【週三優惠】每週三購買豆花類產品，持續享有「買三送一」優惠中！</p>
                 </div>
             </div>
+        </section>
 
-            <div class="menu-group-right">
+        <section id="menu-section" class="page-section">
+            <div class="promo-banner">
+                每週三 買三送一（豆花類）
+            </div>
+            <h2 class="section-title">菜單 MENU</h2>
+            <div class="menu-grid">
                 <div class="menu-category">
-                    <h3>湯類</h3>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <span class="temp-indicator"><span class="dot cold"></span></span>
-                            <span class="item-name">綠豆湯</span>
-                        </div>
-                        <span class="item-price">$45</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                            <span class="item-name">紅豆湯</span>
-                        </div>
-                        <span class="item-price">$55</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <span class="temp-indicator"><span class="dot cold"></span></span>
-                            <span class="item-name">芋泥湯</span>
-                        </div>
-                        <span class="item-price">$50</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>
-                            <span class="item-name">粉圓湯</span>
-                            <span class="item-note">(檸檬)</span>
-                        </div>
-                        <span class="item-price">$45</span>
-                    </div>
+                    <h3>豆花類</h3>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">清豆花</span></div><span class="item-price">$35</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name recommend">粉圓豆花</span><span class="item-note">(檸檬)</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">紅豆豆花</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span><span class="item-name">綠豆豆花</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name recommend">芋泥豆花</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">花生豆花</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">大紅豆豆花</span></div><span class="item-price">$45</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">湯圓豆花</span></div><span class="item-price">$50</span></div>
+                    <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">芋圓豆花</span></div><span class="item-price">$50</span></div>
                 </div>
 
-                <div class="menu-category">
-                    <h3>燒仙草 <span style="font-size: 0.9rem; color: var(--text-light);">(熱)</span></h3>
-                    <div class="menu-item">
-                        <span class="item-name">純燒仙草</span>
-                        <span class="item-price">$40</span>
+                <div class="menu-group-right">
+                    <div class="menu-category">
+                        <h3>湯類</h3>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span><span class="item-name">綠豆湯</span></div><span class="item-price">$45</span></div>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">紅豆湯</span></div><span class="item-price">$55</span></div>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span><span class="item-name">芋泥湯</span></div><span class="item-price">$50</span></div>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span><span class="item-name">粉圓湯</span><span class="item-note">(檸檬)</span></div><span class="item-price">$45</span></div>
                     </div>
-                    <div class="menu-item">
-                        <span class="item-name">綜合燒仙草</span>
-                        <span class="item-price">$55</span>
-                    </div>
-                </div>
 
-                <div class="menu-category">
-                    <h3 style="display: flex; justify-content: space-between;">加料 <span style="font-size: 0.9rem;">$10 / 每樣</span></h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                        <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>粉圓</div>
-                        <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>花生</div>
-                        <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>紅豆</div>
-                        <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>大紅豆</div>
-                        <div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span>綠豆</div>
-                        <div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span>芋泥</div>
+                    <div class="menu-category">
+                        <h3>燒仙草 <span style="font-size: 0.9rem; color: var(--text-light);">(熱)</span></h3>
+                        <div class="menu-item"><span class="item-name">純燒仙草</span><span class="item-price">$40</span></div>
+                        <div class="menu-item"><span class="item-name">綜合燒仙草</span><span class="item-price">$55</span></div>
                     </div>
-                    <div class="menu-item">
-                        <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>芋圓 / 湯圓</div>
-                        <span class="item-price">$15</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">薑汁 <span class="item-note">(熱)</span></div>
-                        <span class="item-price">$5</span>
+
+                    <div class="menu-category">
+                        <h3 style="display: flex; justify-content: space-between;">加料 <span style="font-size: 0.9rem;">$10 / 每樣</span></h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                            <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>粉圓</div>
+                            <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>花生</div>
+                            <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>紅豆</div>
+                            <div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>大紅豆</div>
+                            <div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span>綠豆</div>
+                            <div class="item-info"><span class="temp-indicator"><span class="dot cold"></span></span>芋泥</div>
+                        </div>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span>芋圓 / 湯圓</div><span class="item-price">$15</span></div>
+                        <div class="menu-item"><div class="item-info"><span class="temp-indicator"><span class="dot hot"></span></span>薑汁</div><span class="item-price">$5</span></div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="temp-legend">
+                <span><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span> 冷熱皆供應</span>
+                <span><span class="temp-indicator"><span class="dot cold"></span></span> 僅供應冷的</span>
+            </div>
+        </section>
 
-        <div class="temp-legend">
-            <span><span class="temp-indicator"><span class="dot hot"></span><span class="dot cold"></span></span> 冷熱皆供應</span>
-            <span><span class="temp-indicator"><span class="dot cold"></span></span> 僅供應冷的</span>
-        </div>
     </main>
 
     <footer id="info-section">
@@ -381,21 +133,6 @@
         <p style="font-size: 0.8rem; color: #999;">&copy; 2026 津津豆花 Jin Jin Tofu Pudding. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 20,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
