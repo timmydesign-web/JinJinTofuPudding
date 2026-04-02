@@ -13,13 +13,10 @@
 body {
     font-family: 'Noto Serif TC', serif;
     background-color: var(--bg-color);
-    
-    /* 大理石背景 + 85% 透明度的米白遮罩 */
     background-image: linear-gradient(rgba(247, 245, 240, 0.85), rgba(247, 245, 240, 0.85)), url('marble.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    
     color: var(--text-main);
     line-height: 1.8;
     letter-spacing: 0.05em;
@@ -48,7 +45,7 @@ body {
 }
 
 .nav-title-mini {
-    margin-left: 150px; /* 與漢堡選單保持 150px 的距離 */
+    margin-left: 150px; 
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-main);
@@ -175,9 +172,9 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
     .info-grid { flex-direction: column; gap: 20px; }
     
-    /* 修正：在手機版強制維持與漢堡選單的距離，並保留英文 */
-    .nav-title-mini { margin-left: 80px; font-size: 0.95rem; } 
-    .nav-title-en { display: inline-block; font-size: 0.75rem; margin-left: 5px; } 
+    /* 修正 2：大幅增加距離至 90px，並加上 !important 強制顯示英文 */
+    .nav-title-mini { margin-left: 90px; font-size: 1rem; } 
+    .nav-title-en { display: inline-block !important; font-size: 0.8rem; margin-left: 6px; } 
     
     .menu-toggle-tabs { flex-direction: column; padding: 0 40px; }
 }
