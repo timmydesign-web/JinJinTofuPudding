@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 轉場動畫 ---
+    // --- 開場轉場動畫 ---
     const splashScreen = document.getElementById('splash-screen');
     window.scrollTo(0, 0);
     setTimeout(() => {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 導航列捲動毛玻璃效果 ---
+    // --- 導航列毛玻璃效果 ---
     const topNavBar = document.getElementById('topNavBar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Fade-in up 動畫監聽 ---
+    // --- 捲動浮現動畫 (Fade-in up) ---
     const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -20px 0px"
@@ -89,11 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     seasonTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 切換按鈕樣式
             seasonTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
-            // 判斷套用或移除 is-summer 來觸發 CSS 動畫縮放
             const target = tab.getAttribute('data-target');
             if (target === 'summer') {
                 fullMenuWrapper.classList.add('is-summer');
@@ -106,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 即時時鐘與營業狀態邏輯 ---
     function updateLiveClock() {
         const now = new Date();
-        
-        // 格式化時間 (HH:MM:SS)
         const timeString = now.toLocaleTimeString('en-US', { 
             hour12: true, 
             hour: '2-digit', 
@@ -116,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.getElementById('liveClock').textContent = timeString;
 
-        const day = now.getDay(); // 0 是週日, 3 是週三
+        const day = now.getDay(); 
         const hours = now.getHours();
         const minutes = now.getMinutes();
         
@@ -124,14 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let statusClass = "";
         let note = "營業時間 10:00am - 09:30pm";
 
-        // 時間計算轉換為分鐘，方便比對 (10:00 = 600, 21:30 = 1290)
         const currentMinutes = hours * 60 + minutes;
         const openTime = 10 * 60;
         const closeTime = 21 * 60 + 30;
-        const warningTime = closeTime - 30; // 21:00
+        const warningTime = closeTime - 30;
 
         if (day === 3) {
-            // 週三特殊規則
             note = "今日營業時間 10:00起 (售完為止)";
             if (currentMinutes < openTime) {
                 status = "準備中";
@@ -141,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusClass = "open";
             }
         } else {
-            // 一般營業時間規則
             if (currentMinutes < openTime || currentMinutes >= closeTime) {
                 status = "休息中";
                 statusClass = "closed";
@@ -155,14 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 更新 UI
         const badge = document.getElementById('statusBadge');
         badge.textContent = status;
         badge.className = 'status-badge ' + statusClass;
         document.getElementById('statusNote').textContent = note;
     }
 
-    // 啟動時鐘，每秒更新一次
     updateLiveClock();
     setInterval(updateLiveClock, 1000);
 });
