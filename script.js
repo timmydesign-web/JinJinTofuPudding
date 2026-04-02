@@ -75,8 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            if (!el.classList.contains('in-view') && el.closest('.active')) {
-                observer.observe(el);
+            // 🐛 修正：除了檢查是否在 active 分頁內，也要允許「不在任何分頁內」的全局元素（如 Header 時鐘與 Footer 店家資訊）顯示
+            if (!el.classList.contains('in-view')) {
+                if (el.closest('.active') || !el.closest('.page-section')) {
+                    observer.observe(el);
+                }
             }
         });
     }
@@ -149,9 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const badge = document.getElementById('statusBadge');
-        badge.textContent = status;
-        badge.className = 'status-badge ' + statusClass;
-        document.getElementById('statusNote').textContent = note;
+        if (badge) {
+            badge.textContent = status;
+            badge.className = 'status-badge ' + statusClass;
+        }
+        
+        const noteEl = document.getElementById('statusNote');
+        if (noteEl) {
+            noteEl.textContent = note;
+        }
     }
 
     updateLiveClock();
