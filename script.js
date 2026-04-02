@@ -1,18 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 新增：進場轉場動畫邏輯 ---
+    // --- 轉場動畫 ---
     const splashScreen = document.getElementById('splash-screen');
-    
-    // 確保網頁重新整理時，位置保持在最上方
     window.scrollTo(0, 0);
-
-    // 設定 2 秒後淡出轉場畫面
     setTimeout(() => {
         splashScreen.classList.add('fade-out');
     }, 2000);
 
-
-    // --- 原有：選單與分頁切換邏輯 ---
+    // --- 選單與分頁切換 ---
     const menuToggle = document.getElementById('menuToggle');
     const sideNav = document.getElementById('sideNav');
     const navOverlay = document.getElementById('navOverlay');
@@ -47,6 +42,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
             toggleMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 切換分頁時，重新觸發該頁面的動畫
+            setTimeout(triggerAnimations, 100); 
         });
     });
+
+    // --- 新增：導航列捲動毛玻璃效果 ---
+    const topNavBar = document.getElementById('topNavBar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            topNavBar.classList.add('scrolled');
+        } else {
+            topNavBar.classList.remove('scrolled');
+        }
+    });
+
+    // --- 新增：Fade-in up 捲動浮現動畫 ---
+    const observerOptions = {
+        threshold: 0.1, // 元素出現 10% 就觸發
+        rootMargin: "0px 0px -50px 0px" // 稍微提早觸發
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target); // 動畫只播放一次
+            }
+        });
+    }, observerOptions);
+
+    function triggerAnimations() {
+        const fadeElements = document.querySelectorAll('.fade-in-up');
+        fadeElements.forEach(el => {
+            // 如果元素還沒被加上 in-view，就開始監聽
+            if (!el.classList.contains('in-view')) {
+                observer.observe(el);
+            }
+        });
+    }
+
+    // 初始執行一次動畫監聽
+    triggerAnimations();
 });
