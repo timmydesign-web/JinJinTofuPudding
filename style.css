@@ -8,11 +8,7 @@
     --menu-bg: #EBE6DF;
 }
 
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Noto Serif TC', serif;
@@ -27,21 +23,21 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================================
-   頂部導航列與選單
-   ========================================= */
+/* 頂部導航列 */
 .top-nav-bar { position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 1000; transition: all 0.4s ease-in-out; display: flex; align-items: center; }
 .top-nav-bar.scrolled { height: 60px; background-color: rgba(247, 245, 240, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); }
 .nav-title-mini { margin-left: 150px; font-size: 1.1rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.1em; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
 .nav-title-en { font-size: 0.85rem; font-weight: 400; color: var(--text-light); letter-spacing: 0.05em; margin-left: 8px; }
 .top-nav-bar.scrolled .nav-title-mini { opacity: 1; transform: translateY(0); }
 
+/* 漢堡選單 */
 .menu-toggle { position: absolute; top: 50%; transform: translateY(-50%); left: 25px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 10px; }
 .menu-toggle span { display: block; width: 30px; height: 2px; background-color: var(--text-main); transition: 0.3s; }
 .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .menu-toggle.open span:nth-child(2) { opacity: 0; }
 .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+/* 側滑選單 */
 .side-nav { position: fixed; top: 0; left: -300px; width: 250px; height: 100%; background-color: var(--menu-bg); z-index: 999; transition: 0.4s ease-in-out; padding-top: 80px; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
 .side-nav.open { left: 0; }
 .nav-link { display: block; padding: 15px 30px; color: var(--text-main); text-decoration: none; font-size: 1.1rem; transition: 0.2s; }
@@ -49,46 +45,100 @@ body {
 .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); z-index: 998; opacity: 0; pointer-events: none; transition: 0.3s; }
 .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
-/* =========================================
-   標題、排版與動畫
-   ========================================= */
+/* 標題與分頁 */
 header { text-align: center; padding: 90px 20px 20px; } 
 header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
 header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
-
 main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .page-section { display: none; }
 .page-section.active { display: block; }
 .section-title { text-align: center; font-size: 1.5rem; margin: 30px 0; position: relative; }
 .section-title::after { content: ''; display: block; width: 40px; height: 2px; background-color: var(--accent-color); margin: 10px auto 0; }
 
+/* 故事與圖片 */
 .story-container { max-width: 600px; margin: 0 auto; text-align: justify; }
 .story-text { margin-bottom: 20px; line-height: 2; }
 .story-image { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(62, 58, 57, 0.12); margin: 30px 0; object-fit: cover; }
 
+/* 最新消息 */
 .news-list { max-width: 600px; margin: 0 auto; }
 .news-item { border-bottom: 1px dashed #D0CBC3; padding: 20px 0; }
 .news-date { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 5px; }
 
-/* 開場轉場與滾動動畫 */
-.splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
-.splash-screen.fade-out { opacity: 0; visibility: hidden; }
-.splash-content h2 { font-size: 2.2rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.2em; margin-bottom: 10px; animation: slideUp 1s ease-out forwards; }
-.splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-.fade-in-up.in-view { opacity: 1; transform: translateY(0); }
-
 /* =========================================
-   即時時鐘與狀態區塊
+   修正：即時時鐘與狀態區塊 (Liquid Glass 特效)
    ========================================= */
-.store-status { display: inline-flex; flex-direction: column; align-items: center; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 15px 35px; border-radius: 16px; box-shadow: 0 8px 32px rgba(163, 143, 122, 0.15); margin-top: 25px; border: 1px solid rgba(255, 255, 255, 0.6); }
-.clock { font-size: 1.6rem; font-weight: 600; letter-spacing: 2px; font-family: 'Courier New', Courier, monospace; color: var(--text-main); }
-.status-badge { display: inline-block; padding: 5px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: #fff; margin: 8px 0; letter-spacing: 0.1em; transition: background-color 0.3s ease; }
-.status-badge.open { background-color: #52c41a; box-shadow: 0 2px 8px rgba(82, 196, 26, 0.4); }
-.status-badge.warning { background-color: #faad14; box-shadow: 0 2px 8px rgba(250, 173, 20, 0.4); }
-.status-badge.closed { background-color: #f5222d; box-shadow: 0 2px 8px rgba(245, 34, 45, 0.4); }
-.status-note { font-size: 0.8rem; color: var(--text-light); letter-spacing: 0.05em; }
+.store-status { 
+    display: inline-flex; 
+    flex-direction: column; 
+    align-items: center; 
+    /* 液態玻璃背景與模糊 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 22px 45px; 
+    border-radius: 32px; /* 更大的圓角，iOS 質感 */
+    /* 結合淡淡的邊框、內高光、以及柔和的外陰影 */
+    box-shadow: 
+        0 12px 40px rgba(163, 143, 122, 0.15), 
+        inset 0 1px 2px rgba(255, 255, 255, 0.9), 
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    margin-top: 25px; 
+    position: relative;
+    overflow: hidden;
+}
+
+/* 增加一點對角線的光澤反射 */
+.store-status::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%);
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.clock { 
+    font-size: 1.8rem; 
+    font-weight: 600; 
+    letter-spacing: 3px; 
+    /* 使用系統預設字體來營造 iOS 原生感 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    color: var(--text-main); 
+    text-shadow: 0 2px 5px rgba(0,0,0,0.08); /* 讓數字更清晰浮出 */
+    margin-bottom: 6px;
+    z-index: 1;
+}
+
+.status-badge { 
+    display: inline-block; 
+    padding: 6px 22px; 
+    border-radius: 20px; 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    color: #fff; 
+    margin: 8px 0 12px; 
+    letter-spacing: 0.15em; 
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 1;
+}
+
+/* 狀態徽章也加上漸層與光暈 */
+.status-badge.open { background: linear-gradient(135deg, rgba(82, 196, 26, 0.85), rgba(82, 196, 26, 0.65)); box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3); }
+.status-badge.warning { background: linear-gradient(135deg, rgba(250, 173, 20, 0.85), rgba(250, 173, 20, 0.65)); box-shadow: 0 4px 15px rgba(250, 173, 20, 0.3); }
+.status-badge.closed { background: linear-gradient(135deg, rgba(245, 34, 45, 0.85), rgba(245, 34, 45, 0.65)); box-shadow: 0 4px 15px rgba(245, 34, 45, 0.3); }
+
+.status-note { 
+    font-size: 0.85rem; 
+    color: var(--text-light); 
+    letter-spacing: 0.05em; 
+    font-weight: 500;
+    z-index: 1;
+}
 
 /* =========================================
    菜單基礎排版與季節濾鏡動畫
@@ -131,6 +181,15 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .map-btn { display: inline-flex; align-items: center; justify-content: center; background-color: var(--accent-color); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-size: 0.95rem; letter-spacing: 0.05em; transition: 0.3s ease; box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3); margin-bottom: 20px; }
 .map-btn:hover { background-color: #8c7a67; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(163, 143, 122, 0.4); }
 .map-iframe-wrapper { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+/* 開場轉場與滾動動畫 */
+.splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
+.splash-screen.fade-out { opacity: 0; visibility: hidden; }
+.splash-content h2 { font-size: 2.2rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.2em; margin-bottom: 10px; animation: slideUp 1s ease-out forwards; }
+.splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.fade-in-up.in-view { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
