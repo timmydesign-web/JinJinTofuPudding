@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Fade-in up 動畫監聽 ---
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: "0px 0px -20px 0px" // 微調手機版容易觸發
+        rootMargin: "0px 0px -20px 0px"
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            if (!el.classList.contains('in-view') && el.closest('.active')) {
+            // 修正重點：將 footer (#info-section) 加入判斷條件，讓頁尾元素也能觸發動畫浮現
+            if (!el.classList.contains('in-view') && (el.closest('.active') || el.closest('#info-section'))) {
                 observer.observe(el);
             }
         });
@@ -89,22 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     seasonTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 1. 關閉所有按鈕與菜單的顯示
             seasonTabs.forEach(t => t.classList.remove('active'));
             seasonMenus.forEach(m => m.classList.remove('active'));
 
-            // 2. 啟動當前點擊的按鈕與目標菜單
             tab.classList.add('active');
             const targetMenu = document.getElementById(tab.getAttribute('data-target'));
             
             if (targetMenu) {
                 targetMenu.classList.add('active');
                 
-                // 3. 重置動畫狀態，讓新出現的菜單再次浮現
                 const newFades = targetMenu.querySelectorAll('.fade-in-up');
                 newFades.forEach(el => {
                     el.classList.remove('in-view');
-                    // 稍微延遲讓 DOM 渲染後再掛載監聽器
                     setTimeout(() => observer.observe(el), 50);
                 });
             }
