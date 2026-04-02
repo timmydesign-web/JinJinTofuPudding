@@ -13,7 +13,6 @@
 body {
     font-family: 'Noto Serif TC', serif;
     background-color: var(--bg-color);
-    /* 新增 1：淺淺的背景黃豆/手繪紋理感 */
     background-image: radial-gradient(rgba(163, 143, 122, 0.12) 1px, transparent 1px);
     background-size: 24px 24px;
     color: var(--text-main);
@@ -22,9 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================================
-   新增 2：毛玻璃頂部導航列
-   ========================================= */
+/* 毛玻璃頂部導航列 */
 .top-nav-bar {
     position: fixed;
     top: 0;
@@ -39,14 +36,15 @@ body {
 
 .top-nav-bar.scrolled {
     height: 60px;
-    background-color: rgba(247, 245, 240, 0.75); /* 半透明米白 */
-    backdrop-filter: blur(12px); /* 毛玻璃效果 */
+    background-color: rgba(247, 245, 240, 0.75); 
+    backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .nav-title-mini {
-    margin-left: 70px;
+    /* 修改：從原本的 70px 增加到 90px，拉開與選單符號的距離 */
+    margin-left: 90px;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-main);
@@ -54,6 +52,15 @@ body {
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.4s ease;
+}
+
+/* 新增：導航列標題的英文樣式 */
+.nav-title-en {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    margin-left: 8px;
 }
 
 .top-nav-bar.scrolled .nav-title-mini {
@@ -84,7 +91,7 @@ body {
 .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* 原有標題 */
-header { text-align: center; padding: 90px 20px 20px; } /* 增加 padding 避開導航列 */
+header { text-align: center; padding: 90px 20px 20px; } 
 header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
 header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
 
@@ -108,11 +115,11 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .story-container { max-width: 600px; margin: 0 auto; text-align: justify; }
 .story-text { margin-bottom: 20px; line-height: 2; }
 
-/* 新增 3：圖片圓角與柔和陰影 */
+/* 圖片圓角與柔和陰影 */
 .story-image { 
     width: 100%; 
     border-radius: 12px; 
-    box-shadow: 0 10px 30px rgba(62, 58, 57, 0.12); /* 輕微的深灰色投影 */
+    box-shadow: 0 10px 30px rgba(62, 58, 57, 0.12); 
     margin: 30px 0; 
     object-fit: cover; 
 }
@@ -141,7 +148,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .info-grid { display: flex; justify-content: center; gap: 50px; margin-bottom: 30px; }
 .info-item h4 { font-size: 1rem; color: var(--accent-color); margin-bottom: 10px; }
 
-/* 新增 4：地圖與按鈕設計 */
+/* 地圖與按鈕設計 */
 .map-container { max-width: 600px; margin: 0 auto 30px; }
 .map-btn {
     display: inline-flex;
@@ -173,9 +180,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* =========================================
-   新增 5：Fade-in up 捲動浮現動畫設定
-   ========================================= */
+/* Fade-in up 捲動浮現動畫設定 */
 .fade-in-up {
     opacity: 0;
     transform: translateY(30px);
