@@ -13,6 +13,7 @@
 body {
     font-family: 'Noto Serif TC', serif;
     background-color: var(--bg-color);
+    /* 大理石背景 + 85% 透明度的米白遮罩 */
     background-image: linear-gradient(rgba(247, 245, 240, 0.85), rgba(247, 245, 240, 0.85)), url('marble.jpg');
     background-size: cover;
     background-position: center;
@@ -23,19 +24,78 @@ body {
     overflow-x: hidden;
 }
 
-/* 頂部導航列 */
-.top-nav-bar { position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 1000; transition: all 0.4s ease-in-out; display: flex; align-items: center; }
-.top-nav-bar.scrolled { height: 60px; background-color: rgba(247, 245, 240, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); }
-.nav-title-mini { margin-left: 150px; font-size: 1.1rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.1em; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
-.nav-title-en { font-size: 0.85rem; font-weight: 400; color: var(--text-light); letter-spacing: 0.05em; margin-left: 8px; }
-.top-nav-bar.scrolled .nav-title-mini { opacity: 1; transform: translateY(0); }
+/* 毛玻璃頂部導航列 */
+.top-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;
+    transition: all 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
+}
 
-/* 漢堡選單 */
-.menu-toggle { position: absolute; top: 50%; transform: translateY(-50%); left: 25px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 10px; }
-.menu-toggle span { display: block; width: 30px; height: 2px; background-color: var(--text-main); transition: 0.3s; }
+.top-nav-bar.scrolled {
+    height: 60px;
+    background-color: rgba(247, 245, 240, 0.75); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.nav-title-mini {
+    margin-left: 150px; /* 電腦版與漢堡選單保持 150px 的距離 */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+.nav-title-en {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    margin-left: 8px;
+}
+
+.top-nav-bar.scrolled .nav-title-mini {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 漢堡選單按鈕 */
+.menu-toggle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+}
+.menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: var(--text-main);
+    transition: 0.3s;
+}
 .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .menu-toggle.open span:nth-child(2) { opacity: 0; }
 .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* 原有標題 */
+header { text-align: center; padding: 90px 20px 20px; } 
+header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
+header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
 
 /* 側滑選單 */
 .side-nav { position: fixed; top: 0; left: -300px; width: 250px; height: 100%; background-color: var(--menu-bg); z-index: 999; transition: 0.4s ease-in-out; padding-top: 80px; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
@@ -45,17 +105,14 @@ body {
 .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); z-index: 998; opacity: 0; pointer-events: none; transition: 0.3s; }
 .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
-/* 標題與分頁 */
-header { text-align: center; padding: 90px 20px 20px; } 
-header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
-header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
+/* 分頁切換設定 */
 main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .page-section { display: none; }
 .page-section.active { display: block; }
 .section-title { text-align: center; font-size: 1.5rem; margin: 30px 0; position: relative; }
 .section-title::after { content: ''; display: block; width: 40px; height: 2px; background-color: var(--accent-color); margin: 10px auto 0; }
 
-/* 故事與圖片 */
+/* 故事區塊 */
 .story-container { max-width: 600px; margin: 0 auto; text-align: justify; }
 .story-text { margin-bottom: 20px; line-height: 2; }
 .story-image { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(62, 58, 57, 0.12); margin: 30px 0; object-fit: cover; }
@@ -65,96 +122,21 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .news-item { border-bottom: 1px dashed #D0CBC3; padding: 20px 0; }
 .news-date { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 5px; }
 
-/* 營業狀態區塊 (Liquid Glass 特效) */
-.store-status { 
-    display: inline-flex; 
-    flex-direction: column; 
-    align-items: center; 
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15));
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    /* 微調上下 padding，因為移除了時鐘 */
-    padding: 18px 40px; 
-    border-radius: 32px; 
-    box-shadow: 
-        0 12px 40px rgba(163, 143, 122, 0.15), 
-        inset 0 1px 2px rgba(255, 255, 255, 0.9), 
-        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-    margin-top: 25px; 
-    position: relative;
-    overflow: hidden;
-}
-
-.store-status::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(to bottom right, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%);
-    transform: rotate(30deg);
-    pointer-events: none;
-}
-
-.status-badge { 
-    display: inline-block; 
-    padding: 6px 22px; 
-    border-radius: 20px; 
-    /* 字體稍微放大以增加視覺焦點 */
-    font-size: 0.95rem; 
-    font-weight: 600; 
-    color: #fff; 
-    /* 移除上方 margin，確保置中平衡 */
-    margin: 0 0 10px 0; 
-    letter-spacing: 0.15em; 
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    z-index: 1;
-}
-
-.status-badge.open { background: linear-gradient(135deg, rgba(82, 196, 26, 0.85), rgba(82, 196, 26, 0.65)); box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3); }
-.status-badge.warning { background: linear-gradient(135deg, rgba(250, 173, 20, 0.85), rgba(250, 173, 20, 0.65)); box-shadow: 0 4px 15px rgba(250, 173, 20, 0.3); }
-.status-badge.closed { background: linear-gradient(135deg, rgba(245, 34, 45, 0.85), rgba(245, 34, 45, 0.65)); box-shadow: 0 4px 15px rgba(245, 34, 45, 0.3); }
-
-.status-note { 
-    font-size: 0.85rem; 
-    color: var(--text-light); 
-    letter-spacing: 0.05em; 
-    font-weight: 500;
-    z-index: 1;
-}
-
-/* 菜單基礎排版與季節濾鏡動畫 */
+/* 菜單區塊 */
 .promo-banner { text-align: center; margin: 0 auto 30px; padding: 15px; max-width: 600px; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 4px; font-weight: 600; }
 .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 60px; }
 .menu-category h3 { font-size: 1.2rem; border-bottom: 1px dashed #D0CBC3; padding-bottom: 10px; margin-bottom: 20px; color: var(--accent-color); }
 .menu-item { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; }
 .item-info { display: flex; align-items: center; gap: 8px; }
 .item-note { font-size: 0.75rem; color: var(--text-light); }
-.temp-indicator { display: inline-flex; gap: 2px; max-width: 30px; transition: all 0.3s ease; }
+.temp-indicator { display: inline-flex; gap: 2px; }
 .dot { width: 8px; height: 12px; border-radius: 4px; }
 .dot.hot { background-color: var(--hot-color); }
 .dot.cold { background-color: var(--cold-color); }
 .recommend::before { content: '👍'; font-size: 0.9rem; margin-right: 5px; }
 .temp-legend { margin-top: 40px; font-size: 0.85rem; color: var(--text-light); display: flex; justify-content: center; gap: 20px; }
 
-.menu-toggle-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
-.season-tab { background-color: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 10px 24px; border-radius: 30px; font-size: 1.05rem; font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-.season-tab:hover { background-color: rgba(163, 143, 122, 0.1); }
-.season-tab.active { background-color: var(--accent-color); color: #fff; box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3); }
-
-/* 冬季品項的縮放濾鏡設計 */
-.winter-only { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: scale(1); transform-origin: top; overflow: hidden; }
-.menu-item.winter-only { max-height: 50px; }
-.menu-category.winter-only { max-height: 250px; }
-.temp-legend.winter-only { max-height: 40px; margin-top: 40px; }
-
-/* 夏季時隱藏冬季元素的邏輯 */
-.is-summer .winter-only { opacity: 0; max-height: 0; transform: scale(0.9); margin: 0; padding: 0; border: none; pointer-events: none; }
-.is-summer .temp-indicator { max-width: 0; opacity: 0; margin-right: 0; gap: 0; }
-
-/* 地圖、頁尾與響應式設計 */
+/* 頁尾與地圖區塊 */
 footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1px solid #EBE6DF; }
 .info-grid { display: flex; justify-content: center; gap: 50px; margin-bottom: 30px; }
 .info-item h4 { font-size: 1rem; color: var(--accent-color); margin-bottom: 10px; }
@@ -163,10 +145,49 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .map-btn:hover { background-color: #8c7a67; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(163, 143, 122, 0.4); }
 .map-iframe-wrapper { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
 
+/* 開場轉場動畫 */
+.splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
+.splash-screen.fade-out { opacity: 0; visibility: hidden; }
+.splash-content h2 { font-size: 2.2rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.2em; margin-bottom: 10px; animation: slideUp 1s ease-out forwards; }
+.splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Fade-in up 動畫 */
+.fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.fade-in-up.in-view { opacity: 1; transform: translateY(0); }
+
+/* 季節菜單按鈕樣式與顯示邏輯 */
+.menu-toggle-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+.season-tab { background-color: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 10px 24px; border-radius: 30px; font-size: 1.05rem; font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+.season-tab:hover { background-color: rgba(163, 143, 122, 0.1); }
+.season-tab.active { background-color: var(--accent-color); color: #fff; box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3); }
+
+.season-menu { display: none; }
+.season-menu.active { display: block; animation: fadeInMenu 0.4s ease-in-out; }
+@keyframes fadeInMenu { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =========================================
+   手機版響應式設計 (徹底修正跑版問題)
+   ========================================= */
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
     .info-grid { flex-direction: column; gap: 20px; }
-    .nav-title-mini { margin-left: 60px; font-size: 1rem; }
-    .nav-title-en { display: none; }
+    
+    /* 修正：加入 flex-shrink: 0 防止壓縮，並將中英文分上下兩行顯示 */
+    .nav-title-mini { 
+        margin-left: 80px; 
+        font-size: 1.05rem; 
+        flex-shrink: 0; /* 絕對禁止系統壓縮這個邊距 */
+        display: flex;
+        flex-direction: column; /* 改為上下排列 */
+        justify-content: center;
+    } 
+    .nav-title-en { 
+        display: block !important; /* 強制顯示英文 */
+        font-size: 0.75rem; 
+        margin-left: 0; 
+        margin-top: 2px;
+    } 
+    
     .menu-toggle-tabs { flex-direction: column; padding: 0 40px; }
 }
