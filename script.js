@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Fade-in up 捲動浮現動畫 ---
+    // --- Fade-in up 動畫監聽 ---
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px" 
+        rootMargin: "0px 0px -20px 0px" // 微調手機版容易觸發
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -75,41 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            // 確保只監聽當前顯示頁面(.active)裡的元素，避免隱藏區塊被錯誤觸發
             if (!el.classList.contains('in-view') && el.closest('.active')) {
                 observer.observe(el);
             }
         });
     }
 
-    // 初始執行一次動畫監聽
     triggerAnimations();
 
-    // --- 新增：季節菜單切換邏輯 ---
+    // --- 季節菜單按鈕流暢切換 ---
     const seasonTabs = document.querySelectorAll('.season-tab');
     const seasonMenus = document.querySelectorAll('.season-menu');
 
     seasonTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 1. 移除所有 active 狀態
+            // 1. 關閉所有按鈕與菜單的顯示
             seasonTabs.forEach(t => t.classList.remove('active'));
             seasonMenus.forEach(m => m.classList.remove('active'));
 
-            // 2. 替當前點擊的加上 active
+            // 2. 啟動當前點擊的按鈕與目標菜單
             tab.classList.add('active');
             const targetMenu = document.getElementById(tab.getAttribute('data-target'));
             
             if (targetMenu) {
                 targetMenu.classList.add('active');
                 
-                // 3. 重置新菜單內的動畫元素，讓切換時也能重新浮現
+                // 3. 重置動畫狀態，讓新出現的菜單再次浮現
                 const newFades = targetMenu.querySelectorAll('.fade-in-up');
                 newFades.forEach(el => {
                     el.classList.remove('in-view');
+                    // 稍微延遲讓 DOM 渲染後再掛載監聽器
+                    setTimeout(() => observer.observe(el), 50);
                 });
-                
-                // 4. 重新觸發監聽
-                setTimeout(triggerAnimations, 50);
             }
         });
     });
