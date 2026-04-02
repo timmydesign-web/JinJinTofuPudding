@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (targetId === 'info-section') {
                 toggleMenu();
-                // 修正 1：點擊「店家資訊」時，強制讓底部資訊直接浮現
-                document.querySelectorAll('#info-section .fade-in-up').forEach(el => el.classList.add('in-view'));
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 return;
             }
@@ -59,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Fade-in up 動畫監聽 (修正版) ---
+    // --- Fade-in up 動畫監聽 ---
     const observerOptions = {
-        threshold: 0, /* 修正 1：將門檻調降為 0，只要邊緣碰到就會觸發，避免手機版高度計算失誤 */
-        rootMargin: "0px 0px 50px 0px" /* 修正 1：向下延伸 50px 範圍，確保絕對能被偵測到 */
+        threshold: 0.1,
+        rootMargin: "0px 0px -20px 0px"
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -77,8 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            // 包含 footer 區塊也能順利掛載動畫監聽
-            if (!el.classList.contains('in-view') && (el.closest('.active') || el.closest('#info-section'))) {
+            if (!el.classList.contains('in-view') && el.closest('.active')) {
                 observer.observe(el);
             }
         });
@@ -86,27 +83,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
     triggerAnimations();
 
-    // --- 季節菜單按鈕流暢切換 ---
+    // --- 季節菜單按鈕「濾鏡」切換邏輯 ---
     const seasonTabs = document.querySelectorAll('.season-tab');
-    const seasonMenus = document.querySelectorAll('.season-menu');
+    const fullMenuWrapper = document.getElementById('full-menu-wrapper');
 
     seasonTabs.forEach(tab => {
         tab.addEventListener('click', () => {
+            // 切換按鈕樣式
             seasonTabs.forEach(t => t.classList.remove('active'));
-            seasonMenus.forEach(m => m.classList.remove('active'));
-
             tab.classList.add('active');
-            const targetMenu = document.getElementById(tab.getAttribute('data-target'));
-            
-            if (targetMenu) {
-                targetMenu.classList.add('active');
-                
-                const newFades = targetMenu.querySelectorAll('.fade-in-up');
-                newFades.forEach(el => {
-                    el.classList.remove('in-view');
-                    setTimeout(() => observer.observe(el), 50);
-                });
+
+            // 判斷套用或移除 is-summer 來觸發 CSS 動畫縮放
+            const target = tab.getAttribute('data-target');
+            if (target === 'summer') {
+                fullMenuWrapper.classList.add('is-summer');
+            } else {
+                fullMenuWrapper.classList.remove('is-summer');
             }
         });
     });
+
+    // --- 即時時鐘與營業狀態邏輯 ---
+    function updateLiveClock() {
+        const now = new Date();
+        
+        // 格式化時間 (HH:MM:SS)
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour12: true, 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+        });
+        document.getElementById('liveClock').textContent = timeString;
+
+        const day = now.getDay(); // 0 是週日, 3 是週三
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        
+        let status = "";
+        let statusClass = "";
+        let note = "營業時間 10:00am - 09:30pm";
+
+        // 時間計算轉換為分鐘，方便比對 (10:00 = 600, 21:30 = 1290)
+        const currentMinutes = hours * 60 + minutes;
+        const openTime = 10 * 60;
+        const closeTime = 21 * 60 + 30;
+        const warningTime = closeTime - 30; // 21:00
+
+        if (day === 3) {
+            // 週三特殊規則
+            note = "今日營業時間 10:00起 (售完為止)";
+            if (currentMinutes < openTime) {
+                status = "準備中";
+                statusClass = "closed";
+            } else {
+                status = "營業中";
+                statusClass = "open";
+            }
+        } else {
+            // 一般營業時間規則
+            if (currentMinutes < openTime || currentMinutes >= closeTime) {
+                status = "休息中";
+                statusClass = "closed";
+            } else if (currentMinutes >= warningTime) {
+                status = "即將休息";
+                statusClass = "warning";
+                note = "距離休息時間剩餘不到 30 分鐘囉！";
+            } else {
+                status = "營業中";
+                statusClass = "open";
+            }
+        }
+
+        // 更新 UI
+        const badge = document.getElementById('statusBadge');
+        badge.textContent = status;
+        badge.className = 'status-badge ' + statusClass;
+        document.getElementById('statusNote').textContent = note;
+    }
+
+    // 啟動時鐘，每秒更新一次
+    updateLiveClock();
+    setInterval(updateLiveClock, 1000);
 });
