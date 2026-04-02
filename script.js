@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (targetId === 'info-section') {
                 toggleMenu();
+                // 修正 1：點擊「店家資訊」時，強制讓底部資訊直接浮現
+                document.querySelectorAll('#info-section .fade-in-up').forEach(el => el.classList.add('in-view'));
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 return;
             }
@@ -57,10 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Fade-in up 動畫監聽 ---
+    // --- Fade-in up 動畫監聽 (修正版) ---
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -20px 0px"
+        threshold: 0, /* 修正 1：將門檻調降為 0，只要邊緣碰到就會觸發，避免手機版高度計算失誤 */
+        rootMargin: "0px 0px 50px 0px" /* 修正 1：向下延伸 50px 範圍，確保絕對能被偵測到 */
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            // 修正重點：將 footer (#info-section) 加入判斷條件，讓頁尾元素也能觸發動畫浮現
+            // 包含 footer 區塊也能順利掛載動畫監聽
             if (!el.classList.contains('in-view') && (el.closest('.active') || el.closest('#info-section'))) {
                 observer.observe(el);
             }
