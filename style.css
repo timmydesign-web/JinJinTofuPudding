@@ -65,20 +65,17 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .news-item { border-bottom: 1px dashed #D0CBC3; padding: 20px 0; }
 .news-date { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 5px; }
 
-/* =========================================
-   修正：即時時鐘與狀態區塊 (Liquid Glass 特效)
-   ========================================= */
+/* 營業狀態區塊 (Liquid Glass 特效) */
 .store-status { 
     display: inline-flex; 
     flex-direction: column; 
     align-items: center; 
-    /* 液態玻璃背景與模糊 */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15));
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    padding: 22px 45px; 
-    border-radius: 32px; /* 更大的圓角，iOS 質感 */
-    /* 結合淡淡的邊框、內高光、以及柔和的外陰影 */
+    /* 微調上下 padding，因為移除了時鐘 */
+    padding: 18px 40px; 
+    border-radius: 32px; 
     box-shadow: 
         0 12px 40px rgba(163, 143, 122, 0.15), 
         inset 0 1px 2px rgba(255, 255, 255, 0.9), 
@@ -88,7 +85,6 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
     overflow: hidden;
 }
 
-/* 增加一點對角線的光澤反射 */
 .store-status::before {
     content: '';
     position: absolute;
@@ -101,33 +97,22 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
     pointer-events: none;
 }
 
-.clock { 
-    font-size: 1.8rem; 
-    font-weight: 600; 
-    letter-spacing: 3px; 
-    /* 使用系統預設字體來營造 iOS 原生感 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-    color: var(--text-main); 
-    text-shadow: 0 2px 5px rgba(0,0,0,0.08); /* 讓數字更清晰浮出 */
-    margin-bottom: 6px;
-    z-index: 1;
-}
-
 .status-badge { 
     display: inline-block; 
     padding: 6px 22px; 
     border-radius: 20px; 
-    font-size: 0.85rem; 
+    /* 字體稍微放大以增加視覺焦點 */
+    font-size: 0.95rem; 
     font-weight: 600; 
     color: #fff; 
-    margin: 8px 0 12px; 
+    /* 移除上方 margin，確保置中平衡 */
+    margin: 0 0 10px 0; 
     letter-spacing: 0.15em; 
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.3);
     z-index: 1;
 }
 
-/* 狀態徽章也加上漸層與光暈 */
 .status-badge.open { background: linear-gradient(135deg, rgba(82, 196, 26, 0.85), rgba(82, 196, 26, 0.65)); box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3); }
 .status-badge.warning { background: linear-gradient(135deg, rgba(250, 173, 20, 0.85), rgba(250, 173, 20, 0.65)); box-shadow: 0 4px 15px rgba(250, 173, 20, 0.3); }
 .status-badge.closed { background: linear-gradient(135deg, rgba(245, 34, 45, 0.85), rgba(245, 34, 45, 0.65)); box-shadow: 0 4px 15px rgba(245, 34, 45, 0.3); }
@@ -140,9 +125,7 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
     z-index: 1;
 }
 
-/* =========================================
-   菜單基礎排版與季節濾鏡動畫
-   ========================================= */
+/* 菜單基礎排版與季節濾鏡動畫 */
 .promo-banner { text-align: center; margin: 0 auto 30px; padding: 15px; max-width: 600px; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 4px; font-weight: 600; }
 .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 60px; }
 .menu-category h3 { font-size: 1.2rem; border-bottom: 1px dashed #D0CBC3; padding-bottom: 10px; margin-bottom: 20px; color: var(--accent-color); }
@@ -171,9 +154,7 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .is-summer .winter-only { opacity: 0; max-height: 0; transform: scale(0.9); margin: 0; padding: 0; border: none; pointer-events: none; }
 .is-summer .temp-indicator { max-width: 0; opacity: 0; margin-right: 0; gap: 0; }
 
-/* =========================================
-   地圖、頁尾與響應式設計
-   ========================================= */
+/* 地圖、頁尾與響應式設計 */
 footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1px solid #EBE6DF; }
 .info-grid { display: flex; justify-content: center; gap: 50px; margin-bottom: 30px; }
 .info-item h4 { font-size: 1rem; color: var(--accent-color); margin-bottom: 10px; }
@@ -181,15 +162,6 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .map-btn { display: inline-flex; align-items: center; justify-content: center; background-color: var(--accent-color); color: #fff; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-size: 0.95rem; letter-spacing: 0.05em; transition: 0.3s ease; box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3); margin-bottom: 20px; }
 .map-btn:hover { background-color: #8c7a67; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(163, 143, 122, 0.4); }
 .map-iframe-wrapper { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-
-/* 開場轉場與滾動動畫 */
-.splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
-.splash-screen.fade-out { opacity: 0; visibility: hidden; }
-.splash-content h2 { font-size: 2.2rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.2em; margin-bottom: 10px; animation: slideUp 1s ease-out forwards; }
-.splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-.fade-in-up.in-view { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
