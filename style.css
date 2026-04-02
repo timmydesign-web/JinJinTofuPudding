@@ -158,26 +158,26 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
 .fade-in-up.in-view { opacity: 1; transform: translateY(0); }
 
-/* =========================================
-   季節菜單按鈕樣式與顯示邏輯 (這就是上次遺失的關鍵！)
-   ========================================= */
+/* 季節菜單按鈕樣式與顯示邏輯 */
 .menu-toggle-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
 .season-tab { background-color: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 10px 24px; border-radius: 30px; font-size: 1.05rem; font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
 .season-tab:hover { background-color: rgba(163, 143, 122, 0.1); }
 .season-tab.active { background-color: var(--accent-color); color: #fff; box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3); }
 
-/* 預設隱藏，加上 .active 才會顯示 */
 .season-menu { display: none; }
 .season-menu.active { display: block; animation: fadeInMenu 0.4s ease-in-out; }
 @keyframes fadeInMenu { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* =========================================
-   手機版響應式設計 (也是上次遺失的關鍵！)
+   手機版響應式設計 (修正版)
    ========================================= */
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
     .info-grid { flex-direction: column; gap: 20px; }
-    .nav-title-mini { margin-left: 60px; font-size: 1rem; }
-    .nav-title-en { display: none; /* 手機空間小，隱藏英文保持簡潔 */ }
+    
+    /* 修正：在手機版強制維持與漢堡選單的距離，並保留英文 */
+    .nav-title-mini { margin-left: 80px; font-size: 0.95rem; } 
+    .nav-title-en { display: inline-block; font-size: 0.75rem; margin-left: 5px; } 
+    
     .menu-toggle-tabs { flex-direction: column; padding: 0 40px; }
 }
