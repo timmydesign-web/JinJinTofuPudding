@@ -13,25 +13,59 @@
 body {
     font-family: 'Noto Serif TC', serif;
     background-color: var(--bg-color);
+    /* 新增 1：淺淺的背景黃豆/手繪紋理感 */
+    background-image: radial-gradient(rgba(163, 143, 122, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
     color: var(--text-main);
     line-height: 1.8;
     letter-spacing: 0.05em;
     overflow-x: hidden;
 }
 
-/* 頂部與選單按鈕 */
-header {
-    text-align: center;
-    padding: 60px 20px 20px;
+/* =========================================
+   新增 2：毛玻璃頂部導航列
+   ========================================= */
+.top-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;
+    transition: all 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
 }
-header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
-header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
+
+.top-nav-bar.scrolled {
+    height: 60px;
+    background-color: rgba(247, 245, 240, 0.75); /* 半透明米白 */
+    backdrop-filter: blur(12px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.nav-title-mini {
+    margin-left: 70px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+.top-nav-bar.scrolled .nav-title-mini {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 .menu-toggle {
-    position: fixed;
-    top: 25px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     left: 25px;
-    z-index: 1000;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -49,50 +83,39 @@ header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; 
 .menu-toggle.open span:nth-child(2) { opacity: 0; }
 .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+/* 原有標題 */
+header { text-align: center; padding: 90px 20px 20px; } /* 增加 padding 避開導航列 */
+header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: 0.2em; margin-bottom: 5px; }
+header p { font-size: 0.9rem; color: var(--text-light); letter-spacing: 0.15em; }
+
 /* 側滑選單 */
-.side-nav {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 250px;
-    height: 100%;
-    background-color: var(--menu-bg);
-    z-index: 999;
-    transition: 0.4s ease-in-out;
-    padding-top: 80px;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-}
+.side-nav { position: fixed; top: 0; left: -300px; width: 250px; height: 100%; background-color: var(--menu-bg); z-index: 999; transition: 0.4s ease-in-out; padding-top: 80px; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
 .side-nav.open { left: 0; }
 .nav-header { padding: 0 30px 20px; font-size: 1.2rem; font-weight: 600; color: var(--accent-color); border-bottom: 1px solid #D0CBC3; margin-bottom: 20px;}
-.nav-link {
-    display: block;
-    padding: 15px 30px;
-    color: var(--text-main);
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: 0.2s;
-}
+.nav-link { display: block; padding: 15px 30px; color: var(--text-main); text-decoration: none; font-size: 1.1rem; transition: 0.2s; }
 .nav-link:hover, .nav-link.active { color: var(--accent-color); padding-left: 35px; }
-.nav-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.2); z-index: 998;
-    opacity: 0; pointer-events: none; transition: 0.3s;
-}
+.nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); z-index: 998; opacity: 0; pointer-events: none; transition: 0.3s; }
 .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
 /* 分頁切換設定 */
 main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
-.page-section { display: none; animation: fadeIn 0.5s ease-in-out; }
+.page-section { display: none; }
 .page-section.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .section-title { text-align: center; font-size: 1.5rem; margin: 30px 0; position: relative; }
 .section-title::after { content: ''; display: block; width: 40px; height: 2px; background-color: var(--accent-color); margin: 10px auto 0; }
 
 /* 故事區塊 */
 .story-container { max-width: 600px; margin: 0 auto; text-align: justify; }
 .story-text { margin-bottom: 20px; line-height: 2; }
-.story-image { width: 100%; border-radius: 4px; margin: 30px 0; object-fit: cover; }
+
+/* 新增 3：圖片圓角與柔和陰影 */
+.story-image { 
+    width: 100%; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(62, 58, 57, 0.12); /* 輕微的深灰色投影 */
+    margin: 30px 0; 
+    object-fit: cover; 
+}
 
 /* 最新消息 */
 .news-list { max-width: 600px; margin: 0 auto; }
@@ -113,55 +136,52 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 60vh; }
 .recommend::before { content: '👍'; font-size: 0.9rem; margin-right: 5px; }
 .temp-legend { margin-top: 40px; font-size: 0.85rem; color: var(--text-light); display: flex; justify-content: center; gap: 20px; }
 
+/* 頁尾與地圖區塊 */
 footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1px solid #EBE6DF; }
 .info-grid { display: flex; justify-content: center; gap: 50px; margin-bottom: 30px; }
 .info-item h4 { font-size: 1rem; color: var(--accent-color); margin-bottom: 10px; }
+
+/* 新增 4：地圖與按鈕設計 */
+.map-container { max-width: 600px; margin: 0 auto 30px; }
+.map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(163, 143, 122, 0.3);
+    margin-bottom: 20px;
+}
+.map-btn:hover { background-color: #8c7a67; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(163, 143, 122, 0.4); }
+.map-iframe-wrapper { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
 
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
     .info-grid { flex-direction: column; gap: 20px; }
 }
 
+/* 開場轉場動畫 */
+.splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
+.splash-screen.fade-out { opacity: 0; visibility: hidden; }
+.splash-content h2 { font-size: 2.2rem; font-weight: 600; color: var(--text-main); letter-spacing: 0.2em; margin-bottom: 10px; animation: slideUp 1s ease-out forwards; }
+.splash-content p { font-size: 1rem; color: var(--accent-color); letter-spacing: 0.15em; animation: slideUp 1.2s ease-out forwards; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
 /* =========================================
-   新增：開場轉場動畫 (Splash Screen) 設定
+   新增 5：Fade-in up 捲動浮現動畫設定
    ========================================= */
-.splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
-}
-
-.splash-screen.fade-out {
+.fade-in-up {
     opacity: 0;
-    visibility: hidden;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
-
-.splash-content h2 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: var(--text-main);
-    letter-spacing: 0.2em;
-    margin-bottom: 10px;
-    animation: slideUp 1s ease-out forwards;
-}
-
-.splash-content p {
-    font-size: 1rem;
-    color: var(--accent-color);
-    letter-spacing: 0.15em;
-    animation: slideUp 1.2s ease-out forwards;
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.fade-in-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
 }
