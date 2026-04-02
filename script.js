@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function triggerAnimations() {
         const fadeElements = document.querySelectorAll('.fade-in-up');
         fadeElements.forEach(el => {
-            // 🐛 修正：除了檢查是否在 active 分頁內，也要允許「不在任何分頁內」的全局元素（如 Header 時鐘與 Footer 店家資訊）顯示
             if (!el.classList.contains('in-view')) {
                 if (el.closest('.active') || !el.closest('.page-section')) {
                     observer.observe(el);
@@ -104,17 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 即時時鐘與營業狀態邏輯 ---
-    function updateLiveClock() {
+    // --- 營業狀態邏輯 (移除時鐘顯示，純狀態判斷) ---
+    function updateLiveStatus() {
         const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', { 
-            hour12: true, 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
-        });
-        document.getElementById('liveClock').textContent = timeString;
-
         const day = now.getDay(); 
         const hours = now.getHours();
         const minutes = now.getMinutes();
@@ -163,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    updateLiveClock();
-    setInterval(updateLiveClock, 1000);
+    updateLiveStatus();
+    // 依然保留每分鐘更新一次即可，不用像時鐘每秒更新
+    setInterval(updateLiveStatus, 60000);
 });
