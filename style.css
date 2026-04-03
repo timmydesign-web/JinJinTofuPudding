@@ -13,7 +13,6 @@
 body {
     font-family: 'Noto Serif TC', serif;
     background-color: var(--bg-color);
-    /* 大理石背景 + 85% 透明度的米白遮罩 */
     background-image: linear-gradient(rgba(247, 245, 240, 0.85), rgba(247, 245, 240, 0.85)), url('marble.jpg');
     background-size: cover;
     background-position: center;
@@ -46,7 +45,7 @@ body {
 }
 
 .nav-title-mini {
-    margin-left: 150px; /* 電腦版與漢堡選單保持 150px 的距離 */
+    margin-left: 150px; 
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-main);
@@ -166,28 +165,65 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 .season-menu.active { display: block; animation: fadeInMenu 0.4s ease-in-out; }
 @keyframes fadeInMenu { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* =========================================
-   手機版響應式設計 (徹底修正跑版問題)
-   ========================================= */
+/* 手機版響應式設計 */
 @media (max-width: 768px) {
     .menu-grid { grid-template-columns: 1fr; gap: 30px; }
     .info-grid { flex-direction: column; gap: 20px; }
-    
-    /* 修正：加入 flex-shrink: 0 防止壓縮，並將中英文分上下兩行顯示 */
-    .nav-title-mini { 
-        margin-left: 80px; 
-        font-size: 1.05rem; 
-        flex-shrink: 0; /* 絕對禁止系統壓縮這個邊距 */
-        display: flex;
-        flex-direction: column; /* 改為上下排列 */
-        justify-content: center;
-    } 
-    .nav-title-en { 
-        display: block !important; /* 強制顯示英文 */
-        font-size: 0.75rem; 
-        margin-left: 0; 
-        margin-top: 2px;
-    } 
-    
+    .nav-title-mini { margin-left: 80px; font-size: 1.05rem; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; } 
+    .nav-title-en { display: block !important; font-size: 0.75rem; margin-left: 0; margin-top: 2px; } 
     .menu-toggle-tabs { flex-direction: column; padding: 0 40px; }
+}
+
+/* =========================================
+   新增恢復：營業狀態卡片與呼吸燈特效
+   ========================================= */
+.store-status-card {
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 20px 30px;
+    text-align: center;
+    max-width: 280px;
+    margin: 0 auto 50px; /* 與下方故事保持距離 */
+    box-shadow: 0 10px 30px rgba(163, 143, 122, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 30px;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    transition: all 0.4s ease;
+}
+
+/* 營業中 (綠色與發光特效) */
+.status-badge.open {
+    background-color: #8BC34A;
+    box-shadow: 0 4px 15px rgba(139, 195, 74, 0.4);
+    animation: pulseGreen 2s infinite; 
+}
+
+/* 休息中 (灰色) */
+.status-badge.closed {
+    background-color: #A38F7A; 
+    box-shadow: 0 4px 15px rgba(163, 143, 122, 0.4);
+}
+
+.store-hours-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+}
+
+/* 呼吸燈動畫 */
+@keyframes pulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.5); }
+    70% { box-shadow: 0 0 0 12px rgba(139, 195, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0); }
 }
