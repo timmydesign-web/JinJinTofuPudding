@@ -175,7 +175,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 }
 
 /* =========================================
-   營業狀態卡片 (保持完美方塊與等距)
+   營業狀態卡片 (修正：往上拉提，完美視覺置中)
    ========================================= */
 .store-status-card {
     background-color: rgba(255, 255, 255, 0.65);
@@ -185,7 +185,8 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     padding: 20px 30px;
     text-align: center;
     max-width: 280px;
-    margin: 40px auto 40px; /* 完美居中，且上下留白 40px */
+    /* 修改：縮小上方 margin，拉大下方 margin，解決被往下擠的視覺問題 */
+    margin: 10px auto 60px; 
     box-shadow: 0 10px 30px rgba(163, 143, 122, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
