@@ -84,29 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     triggerAnimations();
 
-    // --- 修正：季節菜單強制載入顯示 ---
+    // --- 修正：季節菜單切換 (移除衝突代碼，改用純 CSS 動畫) ---
     const seasonTabs = document.querySelectorAll('.season-tab');
     const seasonMenus = document.querySelectorAll('.season-menu');
 
     seasonTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 關閉所有選單狀態
             seasonTabs.forEach(t => t.classList.remove('active'));
             seasonMenus.forEach(m => m.classList.remove('active'));
 
-            // 啟動點擊的選單
             tab.classList.add('active');
             const targetMenu = document.getElementById(tab.getAttribute('data-target'));
             
             if (targetMenu) {
                 targetMenu.classList.add('active');
-                
-                // 強制將新菜單內的動畫元素加上顯示狀態，解決切換空白的 BUG
-                const newFades = targetMenu.querySelectorAll('.fade-in-up');
-                newFades.forEach(el => el.classList.remove('in-view'));
-                setTimeout(() => {
-                    newFades.forEach(el => el.classList.add('in-view'));
-                }, 50);
             }
         });
     });
