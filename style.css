@@ -23,7 +23,7 @@ body {
     overflow-x: hidden;
 }
 
-/* 毛玻璃頂部導航列 */
+/* 頂部導航列 */
 .top-nav-bar {
     position: fixed;
     top: 0;
@@ -175,7 +175,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 }
 
 /* =========================================
-   修正：營業狀態卡片 (加入上下各 40px 留白)
+   營業狀態卡片 (保持完美方塊與等距)
    ========================================= */
 .store-status-card {
     background-color: rgba(255, 255, 255, 0.65);
@@ -185,7 +185,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     padding: 20px 30px;
     text-align: center;
     max-width: 280px;
-    margin: 40px auto 40px; /* <--- 在這裡確保了上下等距的獨立方塊感 */
+    margin: 40px auto 40px; /* 完美居中，且上下留白 40px */
     box-shadow: 0 10px 30px rgba(163, 143, 122, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
