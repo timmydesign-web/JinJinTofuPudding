@@ -175,7 +175,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 }
 
 /* =========================================
-   營業狀態卡片 (保持完美方塊與等距)
+   營業狀態卡片 
    ========================================= */
 .store-status-card {
     background-color: rgba(255, 255, 255, 0.65);
@@ -209,11 +209,25 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     animation: pulseGreen 2s infinite; 
 }
 
-/* 新增：即將休息 (橘色) */
+/* 即將休息 (橘色) */
 .status-badge.closing-soon {
-    background-color: #F59E0B; /* 溫暖的橘色 */
+    background-color: #F59E0B; 
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
     animation: pulseOrange 2s infinite; 
+}
+
+/* 新增：週三熱銷中 (紅色) */
+.status-badge.promo {
+    background-color: #E53935; 
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+    /* 1.5s 讓呼吸頻率快一點，帶有急促熱銷感 */
+    animation: pulseRed 1.5s infinite; 
+}
+
+/* 新增：已售完 (無動畫深灰色) */
+.status-badge.sold-out {
+    background-color: #706C69; 
+    box-shadow: none; 
 }
 
 /* 休息中 (咖啡灰色) */
@@ -228,16 +242,19 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     letter-spacing: 0.05em;
 }
 
-/* 綠色呼吸燈 */
+/* 各種呼吸燈特效 */
 @keyframes pulseGreen {
     0% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.5); }
     70% { box-shadow: 0 0 0 12px rgba(139, 195, 74, 0); }
     100% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0); }
 }
-
-/* 新增：橘色呼吸燈 */
 @keyframes pulseOrange {
     0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
     70% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
     100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(229, 57, 53, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
 }
