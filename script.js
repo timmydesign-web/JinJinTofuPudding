@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     triggerAnimations();
 
-    // --- 修正：季節菜單切換 (移除衝突代碼，改用純 CSS 動畫) ---
+    // --- 季節菜單切換 ---
     const seasonTabs = document.querySelectorAll('.season-tab');
     const seasonMenus = document.querySelectorAll('.season-menu');
 
@@ -102,23 +102,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 營業時間自動切換特效 ---
+    // --- 營業時間自動切換特效 (含即將休息邏輯) ---
     function updateStoreStatus() {
         const statusBadge = document.getElementById('store-status-badge');
         if (!statusBadge) return; 
 
         const now = new Date();
+        const dayOfWeek = now.getDay(); // 取得今天星期幾 (0 是週日, 3 是週三)
         const hours = now.getHours();
         const minutes = now.getMinutes();
         
         const currentTimeInMinutes = hours * 60 + minutes;
-        const openTime = 10 * 60;
-        const closeTime = 21 * 60 + 30;
+        const openTime = 10 * 60; // 600 (早上 10:00)
+        const closeTime = 21 * 60 + 30; // 1290 (晚上 09:30)
+        const closingSoonTime = closeTime - 30; // 1260 (晚上 09:00 開始即將休息)
 
+        // 判斷是否在營業時間內
         if (currentTimeInMinutes >= openTime && currentTimeInMinutes < closeTime) {
-            statusBadge.textContent = '營業中';
-            statusBadge.className = 'status-badge open';
+            // 如果是最後 30 分鐘以內，且「今天不是星期三」
+            if (currentTimeInMinutes >= closingSoonTime && dayOfWeek !== 3) {
+                statusBadge.textContent = '即將休息';
+                statusBadge.className = 'status-badge closing-soon';
+            } else {
+                // 一般營業中，或者是星期三的最後 30 分鐘也顯示營業中
+                statusBadge.textContent = '營業中';
+                statusBadge.className = 'status-badge open';
+            }
         } else {
+            // 休息時間
             statusBadge.textContent = '休息中';
             statusBadge.className = 'status-badge closed';
         }
