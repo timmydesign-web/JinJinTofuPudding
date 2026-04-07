@@ -175,7 +175,7 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
 }
 
 /* =========================================
-   營業狀態卡片 (修正：往上拉提，完美視覺置中)
+   營業狀態卡片 (保持完美方塊與等距)
    ========================================= */
 .store-status-card {
     background-color: rgba(255, 255, 255, 0.65);
@@ -185,7 +185,6 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     padding: 20px 30px;
     text-align: center;
     max-width: 280px;
-    /* 修改：縮小上方 margin，拉大下方 margin，解決被往下擠的視覺問題 */
     margin: 10px auto 60px; 
     box-shadow: 0 10px 30px rgba(163, 143, 122, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.8);
@@ -203,12 +202,21 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     transition: all 0.4s ease;
 }
 
+/* 營業中 (綠色) */
 .status-badge.open {
     background-color: #8BC34A;
     box-shadow: 0 4px 15px rgba(139, 195, 74, 0.4);
     animation: pulseGreen 2s infinite; 
 }
 
+/* 新增：即將休息 (橘色) */
+.status-badge.closing-soon {
+    background-color: #F59E0B; /* 溫暖的橘色 */
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    animation: pulseOrange 2s infinite; 
+}
+
+/* 休息中 (咖啡灰色) */
 .status-badge.closed {
     background-color: #A38F7A; 
     box-shadow: 0 4px 15px rgba(163, 143, 122, 0.4);
@@ -220,8 +228,16 @@ footer { margin-top: 80px; padding: 60px 20px; text-align: center; border-top: 1
     letter-spacing: 0.05em;
 }
 
+/* 綠色呼吸燈 */
 @keyframes pulseGreen {
     0% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.5); }
     70% { box-shadow: 0 0 0 12px rgba(139, 195, 74, 0); }
     100% { box-shadow: 0 0 0 0 rgba(139, 195, 74, 0); }
+}
+
+/* 新增：橘色呼吸燈 */
+@keyframes pulseOrange {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
+    70% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
 }
