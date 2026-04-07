@@ -1,3 +1,11 @@
+// ==========================================
+// 【手動售完開關】
+// 如果今天提早賣完，請將下面的 false 改成 true
+// 隔天營業前，記得再用電腦把它改回 false 喔！
+// ==========================================
+const isSoldOut = false;
+
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- 轉場動畫 ---
@@ -102,36 +110,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 營業時間自動切換特效 (含即將休息邏輯) ---
+    // --- 營業時間自動切換特效 (含週三特例與售完開關) ---
     function updateStoreStatus() {
         const statusBadge = document.getElementById('store-status-badge');
-        if (!statusBadge) return; 
+        const hoursText = document.querySelector('.store-hours-text');
+        if (!statusBadge || !hoursText) return; 
 
         const now = new Date();
-        const dayOfWeek = now.getDay(); // 取得今天星期幾 (0 是週日, 3 是週三)
+        const dayOfWeek = now.getDay(); // 0 是週日, 3 是週三
         const hours = now.getHours();
         const minutes = now.getMinutes();
         
         const currentTimeInMinutes = hours * 60 + minutes;
         const openTime = 10 * 60; // 600 (早上 10:00)
         const closeTime = 21 * 60 + 30; // 1290 (晚上 09:30)
-        const closingSoonTime = closeTime - 30; // 1260 (晚上 09:00 開始即將休息)
+        const closingSoonTime = closeTime - 30; // 1260
 
-        // 判斷是否在營業時間內
-        if (currentTimeInMinutes >= openTime && currentTimeInMinutes < closeTime) {
-            // 如果是最後 30 分鐘以內，且「今天不是星期三」
-            if (currentTimeInMinutes >= closingSoonTime && dayOfWeek !== 3) {
-                statusBadge.textContent = '即將休息';
-                statusBadge.className = 'status-badge closing-soon';
+        // 1. 最優先判斷：如果手動開啟了「已售完」
+        if (isSoldOut) {
+            statusBadge.textContent = '今日已售完';
+            statusBadge.className = 'status-badge sold-out';
+            return; // 已經售完，直接結束判斷
+        }
+
+        // 2. 判斷是否為星期三 (週三優惠日)
+        if (dayOfWeek === 3) {
+            hoursText.textContent = '營業時間 10:00am - 售完為止';
+            
+            if (currentTimeInMinutes >= openTime && currentTimeInMinutes < closeTime) {
+                statusBadge.textContent = '週三優惠熱銷中';
+                statusBadge.className = 'status-badge promo'; // 觸發紅色呼吸燈
             } else {
-                // 一般營業中，或者是星期三的最後 30 分鐘也顯示營業中
-                statusBadge.textContent = '營業中';
-                statusBadge.className = 'status-badge open';
+                statusBadge.textContent = '休息中';
+                statusBadge.className = 'status-badge closed';
             }
-        } else {
-            // 休息時間
-            statusBadge.textContent = '休息中';
-            statusBadge.className = 'status-badge closed';
+        } 
+        // 3. 非星期三的一般日子
+        else {
+            hoursText.textContent = '營業時間 10:00am - 09:30pm';
+
+            if (currentTimeInMinutes >= openTime && currentTimeInMinutes < closeTime) {
+                if (currentTimeInMinutes >= closingSoonTime) {
+                    statusBadge.textContent = '即將休息';
+                    statusBadge.className = 'status-badge closing-soon'; // 橘色呼吸燈
+                } else {
+                    statusBadge.textContent = '營業中';
+                    statusBadge.className = 'status-badge open'; // 綠色呼吸燈
+                }
+            } else {
+                statusBadge.textContent = '休息中';
+                statusBadge.className = 'status-badge closed';
+            }
         }
     }
     
